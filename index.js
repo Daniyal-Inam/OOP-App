@@ -15,38 +15,41 @@ class Person {
 }
 const persons = new Person();
 const programStart = async (persons) => {
-    console.log(chalk.bold.italic.yellow("\nWelcome guest\n"));
+    console.log(chalk.bold.italic.yellowBright("\nWelcome! \n"));
     do {
         const ans = await inquirer.prompt({
             name: "select",
-            message: chalk.cyan("What do you want to do?"),
+            message: chalk.cyan("Whom would you like to intrect with?"),
             type: "list",
-            choices: ["Self", "Student", "Exit"],
+            choices: ["Staff", "Student", "Exit"],
         });
         if (ans.select === "Exit") {
-            console.log(chalk.bold.italic.green("\nThank you for visiting...."));
+            console.log(chalk.bold.italic.yellowBright("\nThank you for visiting...."));
             break;
         }
         ;
-        if (ans.select === "Self") {
-            console.log(chalk.blue.bold.italic("\nHello, I am talking to myself."));
-            console.log(chalk.blue.bold.italic("I am feeling well; I am a cheerful person.\n"));
+        if (ans.select === "Staff") {
+            console.log(chalk.greenBright.bold.italic("\nYou approach the staff room. Please feel free to ask any question.\n"));
         }
+        ;
         if (ans.select === "Student") {
             const ans = await inquirer.prompt({
                 name: "student",
-                message: chalk.cyan("Who do you want to talk to among the students?:"),
+                message: chalk.bgBlueBright("Enter the student's name you wish to engage with: "),
                 type: "input",
             });
             const student = persons.students.find((val) => val.name === ans.student);
             if (!student) {
                 const name = new Student(ans.student);
                 persons.addStudent(name);
-                console.log(chalk.green.bold(`\nHello, I am ${name.name} and I am fine.`));
+                console.log(chalk.yellowBright.bold.italic(`\nHello, I am ${name.name}. Nice to meet you!\n`));
+                console.log(chalk.green.bold("New student added\n"));
+                console.log(chalk.green.bold("Current student list: \n"));
                 console.log(persons.students);
             }
             if (student) {
-                console.log(chalk.green.bold(`Hello, I am ${student.name} and I am fine....`));
+                console.log(chalk.yellowBright.bold.italic(`\nHello, I am ${student.name}. Nice to see you again!\n`));
+                console.log(chalk.green.bold("Existing student list: \n"));
                 console.log(persons.students);
             }
         }
